@@ -1,12 +1,13 @@
 from ecc import PrivateKey
 from helper import decode_base58, little_endian_to_int, hash256
-from script import p2pkh_script, Script
+from script import p2pkh_script
 from tx import TxIn, TxOut, Tx
 
 #PRIVATE  KEY
 SEMILLA = b'HolaHashgerTraines'
 SECRETO = little_endian_to_int(hash256(SEMILLA)) 
 PrivKey = PrivateKey(SECRETO)
+print('Mi llave privada es: ',PrivKey.hex())
 ADDRESS = PrivKey.point.address(testnet=True)
 print('Mi direecion  Bitcoin testenet es: ', ADDRESS)
 
@@ -41,4 +42,3 @@ TX_BUILD = Tx(1,tx_inputs, tx_outputs, 0, testnet=True)
 #SIGN
 print(TX_BUILD.sign_input(0, PrivKey))
 print(TX_BUILD.serialize().hex())
-print(TX_BUILD.fee())
